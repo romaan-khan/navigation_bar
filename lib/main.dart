@@ -1,3 +1,4 @@
+import 'package:demo_app_bottom_bar/request_queue.dart';
 import 'package:demo_app_bottom_bar/super_bottom_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      navigatorKey: NavigationService.navigatorKey,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -35,6 +37,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  final queue = Queue();
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -44,6 +48,19 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    fetchAPIs();
+  }
+
+  Future<void> fetchAPIs()async{
+    final result = await queue.add(()=>Future.delayed(const Duration(seconds: 2)));
+    final result2 = await queue.add(()=>Future.delayed(const Duration(seconds: 3)));
+    final result3 = await queue.add(()=>Future.delayed(const Duration(seconds: 4)));
   }
 
   @override
@@ -59,6 +76,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
 
+
     );
 
 
@@ -68,4 +86,11 @@ class _MyHomePageState extends State<MyHomePage> {
 
 
 
+}
+
+
+
+class NavigationService {
+  static GlobalKey<NavigatorState> navigatorKey =
+  GlobalKey<NavigatorState>();
 }
