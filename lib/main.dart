@@ -1,3 +1,5 @@
+import 'package:demo_app_bottom_bar/custom_calendar.dart';
+import 'package:demo_app_bottom_bar/material_calendar.dart';
 import 'package:demo_app_bottom_bar/request_queue.dart';
 import 'package:demo_app_bottom_bar/super_bottom_bar.dart';
 import 'package:flutter/foundation.dart';
@@ -19,14 +21,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      // home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: CalendarView2()
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
 
   final String title;
 
@@ -50,47 +52,36 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-
   @override
   void initState() {
     super.initState();
     fetchAPIs();
   }
 
-  Future<void> fetchAPIs()async{
-    final result = await queue.add(()=>Future.delayed(const Duration(seconds: 2)));
-    final result2 = await queue.add(()=>Future.delayed(const Duration(seconds: 3)));
-    final result3 = await queue.add(()=>Future.delayed(const Duration(seconds: 4)));
+  Future<void> fetchAPIs() async {
+    final result =
+        await queue.add(() => Future.delayed(const Duration(seconds: 2)));
+    final result2 =
+        await queue.add(() => Future.delayed(const Duration(seconds: 3)));
+    final result3 =
+        await queue.add(() => Future.delayed(const Duration(seconds: 4)));
   }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-        bottomNavigationBar:  BrandBottomNavigationBar(
-          currentIndex: 2,
-          onSelected: (index){
-            if (kDebugMode) {
-              print('selected index is $index');
-            }
-          },
-        ),
-
-
+      bottomNavigationBar: BrandBottomNavigationBar(
+        currentIndex: 2,
+        onSelected: (index) {
+          if (kDebugMode) {
+            print('selected index is $index');
+          }
+        },
+      ),
     );
-
-
-
   }
-
-
-
-
 }
 
-
-
 class NavigationService {
-  static GlobalKey<NavigatorState> navigatorKey =
-  GlobalKey<NavigatorState>();
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }
